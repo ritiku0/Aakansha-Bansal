@@ -1,0 +1,38 @@
+﻿<Application
+    x:Class="Organisation.WPF.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Organisation.WPF"
+    xmlns:viewmodels="clr-namespace:Organisation.WPF.ViewModels"
+    xmlns:views="clr-namespace:Organisation.WPF.Views">
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Common.xaml" />
+                <ResourceDictionary Source="/Styles/NavigationBar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type viewmodels:LoginViewModel}">
+                <views:LoginView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodels:RegisterViewModel}">
+                <views:RegisterView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodels:ProfileViewModel}">
+                <views:Profile />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodels:MachineViewModel}">
+                <views:MachineView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodels:JobViewModel}">
+                <views:JobVeiw />
+            </DataTemplate>
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>
