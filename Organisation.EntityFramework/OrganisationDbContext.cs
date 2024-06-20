@@ -9,6 +9,8 @@ namespace Organisation.EntityFramework
 
         public DbSet<Machine> Machines { get; set; }
 
+        public DbSet<Job> Jobs { get; set; }
+
         public OrganisationDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

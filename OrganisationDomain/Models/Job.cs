@@ -14,11 +14,9 @@ namespace Organisation.Domain.Models
         public int JobLength { get; set; }
         public DateTime JobStartDate { get; set; }
         public DateTime JobEndDate { get; set; }
-        public int TotalProduction { get; set; }
-        public int ProductionSpeed { get; set; }
+        public int TotalProduction { get; set; }     
 
-        [Required]
-        [StringLength(8)]
+        [Required]      
         public int MachineNumber { get; set; }
 
     }

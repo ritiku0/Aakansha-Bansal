@@ -48,7 +48,7 @@ namespace Organisation.WPF.ViewModels
 
         public bool CanUpdate(object param)
         {
-            if (SelectedMachineItem.MachineName != null)
+            if (SelectedMachineItem!= null && SelectedMachineItem.MachineName != null)
             {
                 return true;
             }

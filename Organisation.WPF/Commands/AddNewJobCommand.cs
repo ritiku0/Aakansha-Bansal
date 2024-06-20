@@ -4,24 +4,27 @@ using Organisation.WPF.State.Authenticators;
 using Organisation.WPF.State.Navigators;
 using Organisation.WPF.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Organisation.WPF.Commands
 {
-    public class AddNewMachineCommand : AsyncCommandBase
+    public class AddNewJobCommand : AsyncCommandBase
     {
-        private readonly AddNewMachineViewModel _addNewMachineCommandl;
+        private readonly AddNewJobViewModel _addNewJobCommand;
         private readonly IAuthenticator _authenticator;
         private readonly IRenavigator _registerRenavigator;
 
-        public AddNewMachineCommand(AddNewMachineViewModel registerViewModel, IAuthenticator authenticator, IRenavigator registerRenavigator)
+        public AddNewJobCommand(AddNewJobViewModel registerViewModel, IAuthenticator authenticator, IRenavigator registerRenavigator)
         {
-            _addNewMachineCommandl = registerViewModel;
+            _addNewJobCommand = registerViewModel;
             _authenticator = authenticator;
             _registerRenavigator = registerRenavigator;
 
-            _addNewMachineCommandl.PropertyChanged += AddNewMachineCommand_PropertyChanged;
+            _addNewJobCommand.PropertyChanged += AddNewMachineCommand_PropertyChanged;
         }
 
         public override bool CanExecute(object parameter)
@@ -33,16 +36,17 @@ namespace Organisation.WPF.Commands
         {
             try
             {
-                Machine newMachine = new Machine
+                Job newJob = new Job
                 {
-                    MachineName = _addNewMachineCommandl.MachineName,
-                    MachineNumber = _addNewMachineCommandl.MachineNumber,
-                    ManufacturingDate = _addNewMachineCommandl.MfgDate,
-                    ProductionSpeed = _addNewMachineCommandl.ProductionSpeed,
-                    MachineImage = _addNewMachineCommandl.MachineImage
+                    JobName = _addNewJobCommand.JobName,
+                    MachineNumber = _addNewJobCommand.MachineNumber,
+                    JobLength = _addNewJobCommand.JobLength,
+                    JobStartDate = _addNewJobCommand.JobStartDate,
+                    JobEndDate = _addNewJobCommand.JobEndDate,
+                    TotalProduction = _addNewJobCommand.TotalProduction
                 };
 
-                RegistrationResult registrationResult = await _authenticator.RegisterMachine(newMachine);
+                RegistrationResult registrationResult = await _authenticator.RegisterJob(newJob);
 
                 if (registrationResult == RegistrationResult.Success)
                 {
@@ -58,7 +62,7 @@ namespace Organisation.WPF.Commands
 
         private void AddNewMachineCommand_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(AddNewJobViewModel.CanRegister))
+            if (e.PropertyName == nameof(RegisterViewModel.CanRegister))
             {
                 OnCanExecuteChanged();
             }

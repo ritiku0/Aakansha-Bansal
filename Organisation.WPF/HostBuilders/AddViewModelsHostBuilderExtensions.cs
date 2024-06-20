@@ -16,23 +16,24 @@ namespace Organisation.WPF.HostBuilders
             {
                             
                 services.AddTransient<MainViewModel>();
-                services.AddTransient<ProfileViewModel>();                
-                services.AddTransient<JobViewModel>();
-
+                services.AddTransient<ProfileViewModel>();                               
 
                 services.AddSingleton<CreateViewModel<ProfileViewModel>>(services => () => CreateProfileViewModel(services));
                 services.AddSingleton<CreateViewModel<MachineViewModel>>(services => () => CreateMachineViewModel(services));
-                services.AddSingleton<CreateViewModel<JobViewModel>>(services => () => services.GetRequiredService<JobViewModel>());
+                services.AddSingleton<CreateViewModel<JobViewModel>>(services => () => CreateJobViewModel(services));
                 services.AddSingleton<CreateViewModel<LoginViewModel>>(services => () => CreateLoginViewModel(services));
                 services.AddSingleton<CreateViewModel<RegisterViewModel>>(services => () => CreateRegisterViewModel(services));                 
                 services.AddSingleton<IOrganisationViewModelFactory, OrganisationViewModelFactory>();
-
+              
                 services.AddSingleton<ViewModelDelegateRenavigator<ProfileViewModel>>();
                 services.AddSingleton<ViewModelDelegateRenavigator<MachineViewModel>>();
+                services.AddSingleton<ViewModelDelegateRenavigator<JobViewModel>>();
                 services.AddSingleton<ViewModelDelegateRenavigator<LoginViewModel>>();
                 services.AddSingleton<ViewModelDelegateRenavigator<RegisterViewModel>>();
                 services.AddSingleton<ViewModelDelegateRenavigator<AddNewMachineViewModel>>();
                 services.AddSingleton<CreateViewModel<AddNewMachineViewModel>>(services => () => CreateAddMachineViewModel(services));
+                services.AddSingleton<ViewModelDelegateRenavigator<AddNewJobViewModel>>();
+                services.AddSingleton<CreateViewModel<AddNewJobViewModel>>(services => () => CreateAddJobViewModel(services));
             });
 
             return host;
@@ -66,11 +67,25 @@ namespace Organisation.WPF.HostBuilders
                 services.GetRequiredService<ViewModelDelegateRenavigator<AddNewMachineViewModel>>());
         }
 
+        private static JobViewModel CreateJobViewModel(IServiceProvider services)
+        {
+            return new JobViewModel(
+                services.GetRequiredService<IAuthenticator>(),
+                services.GetRequiredService<ViewModelDelegateRenavigator<AddNewJobViewModel>>());
+        }
+
         private static AddNewMachineViewModel CreateAddMachineViewModel(IServiceProvider services)
         {
             return new AddNewMachineViewModel(
                 services.GetRequiredService<IAuthenticator>(),
                 services.GetRequiredService<ViewModelDelegateRenavigator<MachineViewModel>>());                
+        }
+
+        private static AddNewJobViewModel CreateAddJobViewModel(IServiceProvider services)
+        {
+            return new AddNewJobViewModel(
+                services.GetRequiredService<IAuthenticator>(),
+                services.GetRequiredService<ViewModelDelegateRenavigator<JobViewModel>>());
         }
     }
 }

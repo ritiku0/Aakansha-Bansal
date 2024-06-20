@@ -22,6 +22,7 @@ namespace Organisation.WPF.HostBuilders
                 services.AddSingleton<IDataService<Machine>,MachineDataService>();
                 services.AddSingleton<IAccountService, AccountDataService>();
                 services.AddSingleton<IMachineDataService, MachineDataService>();
+                services.AddSingleton<IJobDataService, JobDataService>();
             });
 
             return host;

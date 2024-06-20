@@ -36,6 +36,11 @@
             <DataTemplate DataType="{x:Type viewmodels:AddNewMachineViewModel}">
                 <views:AddNewMachine />
             </DataTemplate>
+
+
+            <DataTemplate DataType="{x:Type viewmodels:AddNewJobViewModel}">
+                <views:AddNewJob />
+            </DataTemplate>
         </ResourceDictionary>
 
     </Application.Resources>

@@ -62,8 +62,25 @@ namespace Organisation.Domain.Services.AuthenticationServices
         Task<RegistrationResult> RegisterEntity(Machine machine);
 
         /// <summary>
-        /// Register a new user.     
+        /// Register a new machine.     
         Task<IEnumerable<Machine>> FetchMachines();
+
+        /// <summary>
+        /// Fetch Jobs     
+        Task<IEnumerable<Job>> FetchJobs();
+
+        Task<Job> UpdateJob(Job machine);
+
+        Task<bool> DeleteJob(Job machine);
+
+
+        /// <summary>
+        /// Register a new user.
+        /// </summary>       
+        /// <param name="entity">The user's entity.</param>
+        /// <returns>The result of the registration.</returns>
+        /// <exception cref="Exception">Thrown if the registration fails.</exception>
+        Task<RegistrationResult> RegisterJob(Job machine);
 
     }
 }

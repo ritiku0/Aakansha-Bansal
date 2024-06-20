@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Organisation.EntityFramework;
 
 namespace Organisation.EntityFramework.Migrations
 {
     [DbContext(typeof(OrganisationDbContext))]
-    partial class OrganisationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240620083706_addjobtable")]
+    partial class addjobtable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

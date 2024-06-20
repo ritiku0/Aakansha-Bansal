@@ -54,13 +54,21 @@ namespace Organisation.WPF.State.Authenticators
         {
             return await _authenticationService.RegisterEntity(entity);
         }
+        public async Task<RegistrationResult> RegisterJob(Job entity)
+        {
+            return await _authenticationService.RegisterJob(entity);
+        }
 
         public async Task<IEnumerable<Machine>> FetchMachines()
         {
             return await _authenticationService.FetchMachines();
         }
-        
 
+        public async Task<IEnumerable<Job>> FetchJobs()
+        {
+            return await _authenticationService.FetchJobs();
+        }
+     
         public async Task<RegistrationResult> Update(int Id, string username, string country, string address, string email, string phoneNumber, string password)
         {
             return await _authenticationService.Update(Id, username, country, address, email, phoneNumber, password);
@@ -75,6 +83,16 @@ namespace Organisation.WPF.State.Authenticators
         {
             return await _authenticationService.DeleteMachine(machine);
         }
+        public async Task<Job> UpdateJob(Job job)
+        {
+            return await _authenticationService.UpdateJob(job);
+        }
+
+        public async Task<bool> DeleteJob(Job job)
+        {
+            return await _authenticationService.DeleteJob(job);
+        }
         
+
     }
 }

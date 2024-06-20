@@ -13,13 +13,15 @@ namespace Organisation.Domain.Services.AuthenticationServices
     {
         private readonly IAccountService _accountService;
         private readonly IMachineDataService _machineDataService;
+        private readonly IJobDataService _jobDataService;
         private readonly IPasswordHasher _passwordHasher;
 
-        public AuthenticationService(IAccountService accountService, IPasswordHasher passwordHasher, IMachineDataService machineDataService)
+        public AuthenticationService(IAccountService accountService, IPasswordHasher passwordHasher, IMachineDataService machineDataService, IJobDataService jobDataService)
         {
             _accountService = accountService;
             _passwordHasher = passwordHasher;
             _machineDataService = machineDataService;
+            _jobDataService = jobDataService;
         }
 
         public async Task<User> Login(string username, string password)
@@ -165,6 +167,60 @@ namespace Organisation.Domain.Services.AuthenticationServices
             return Enumerable.Empty<Machine>();
         }
 
+        public async Task<IEnumerable<Job>> FetchJobs()
+        {
+            try
+            {
+                return await _jobDataService.GetAll();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return Enumerable.Empty<Job>();
+        }
+
+        public async Task<Job> UpdateJob(Job job)
+        {
+            try
+            {
+                await _jobDataService.Update(job.Id, job);
+              
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return default(Job);
+        }
+
+        public async Task<bool> DeleteJob(Job job)
+        {
+            try
+            {
+                await _jobDataService.Delete(job.Id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return default;
+        }
+
+        public async Task<RegistrationResult> RegisterJob(Job job)
+        {
+            RegistrationResult result = RegistrationResult.Success;
+            try
+            {
+                await _jobDataService.Create(job);
+            }
+            catch (Exception ex)
+            {
+                result = RegistrationResult.Fail;
+                Console.WriteLine(ex.Message);
+            }
+            return result;
+        }
 
     }
 }

@@ -32,6 +32,8 @@ namespace Organisation.WPF.State.Authenticators
 
         Task<IEnumerable<Machine>> FetchMachines();
 
+        Task<IEnumerable<Job>> FetchJobs();
+
         /// <summary>
         /// Login to the application.
         /// </summary>
@@ -58,6 +60,12 @@ namespace Organisation.WPF.State.Authenticators
         Task<Machine> UpdateMachine(Machine machine);
 
         Task<bool> DeleteMachine(Machine machine);
+
+        Task<Job> UpdateJob(Job job);
+
+        Task<bool> DeleteJob(Job job);
+
+        Task<RegistrationResult> RegisterJob(Job machine);
 
         void Logout();
     }

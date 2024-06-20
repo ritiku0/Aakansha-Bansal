@@ -13,28 +13,21 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="btnSearch"  Height="50" Margin="10,0"  Width="100"  HorizontalAlignment="Right">Search</TextBox>
-        <DataGrid x:Name="gridJob" Margin="10,0" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Jobs}">
+        <Button x:Name="btnAdd"   Command="{Binding AddJobCommand}" Height="50" Content="Add New Job" FontSize="18" HorizontalAlignment="Right" MinWidth="100"  FontWeight="Bold"  Margin="10,0"  />
+        <DataGrid x:Name="gridMachine" SelectedItem="{Binding SelectedJobItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="10,0" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Jobs}" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Width="*" Binding="{Binding Id}" Visibility="Hidden"/>
                 <DataGridTextColumn Header="Job Name" Width="*" Binding="{Binding JobName}" />
-                <DataGridTextColumn Header="Machine Number" Width="*" Binding="{Binding MachineNumber}" />
-                <DataGridTextColumn Header="Job Length" Width="*" Binding="{Binding JobLength}" />
+                <DataGridTextColumn Header="Job Length(in meters)" Width="*" Binding="{Binding JobLength}" />
                 <DataGridTextColumn Header="Job Start Date" Width="*" Binding="{Binding JobStartDate}" />
                 <DataGridTextColumn Header="Job End Date" Width="*" Binding="{Binding JobEndDate}" />
                 <DataGridTextColumn Header="Total Production" Width="*" Binding="{Binding TotalProduction}" />
-                <DataGridTextColumn Header="Production Speed" Width="*" Binding="{Binding ProductionSpeed}" />
+                <DataGridTextColumn Header="Machine Number" Width="*" Binding="{Binding MachineNumber}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="btnAdd" Height="50" Content="Add" FontSize="18"  FontWeight="Bold" Margin="40,5,40,5"  />
-            <Button x:Name="btnUpdate" Height="50" Content="Update" FontSize="18" Grid.Column="1" FontWeight="Bold" Margin="40,5,40,5"  />
-            <Button x:Name="btnDelete" Height="50" Content="Delete" FontSize="18" Grid.Column="2" FontWeight="Bold" Margin="40,5,40,5" />
-        </Grid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btnUpdate" Command="{Binding UpdateJobCommand}" Height="50" Content="Update" FontSize="18" Grid.Column="1" FontWeight="Bold" Margin="10,5" />
+            <Button x:Name="btnDelete" Command="{Binding DeleteJobCommand}" Height="50" Content="Delete" FontSize="18" Grid.Column="2" FontWeight="Bold" Margin="10,5" />
+        </StackPanel>
     </Grid>
 </UserControl>
