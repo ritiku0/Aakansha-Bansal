@@ -13,8 +13,8 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="btnSearch"  Height="50" Margin="10,0"  Width="100"  HorizontalAlignment="Right">Search</TextBox>
-        <DataGrid x:Name="gridMachine" Margin="10,0" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Machines}">
+        <Button x:Name="btnAdd"   Command="{Binding AddMachineCommand}" Height="50" Content="Add New Machine" FontSize="18" HorizontalAlignment="Right" MinWidth="100"  FontWeight="Bold"  Margin="10,0"  />
+        <DataGrid x:Name="gridMachine" SelectedItem="{Binding SelectedMachineItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="10,0" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Machines}" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Width="*" Binding="{Binding Id}" Visibility="Hidden"/>
                 <DataGridTextColumn Header="Machine Name" Width="*" Binding="{Binding MachineName}" />
@@ -24,15 +24,9 @@
                 <DataGridTextColumn Header="Manufacturing Date" Width="*" Binding="{Binding ManufacturingDate}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="btnAdd" Height="50" Content="Add" FontSize="18"  FontWeight="Bold" Margin="40,5,40,5"  />
-            <Button x:Name="btnUpdate" Height="50" Content="Update" FontSize="18" Grid.Column="1" FontWeight="Bold" Margin="40,5,40,5"  />
-            <Button x:Name="btnDelete" Height="50" Content="Delete" FontSize="18" Grid.Column="2" FontWeight="Bold" Margin="40,5,40,5" />
-        </Grid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btnUpdate" Command="{Binding UpdateMachineCommand}" Height="50" Content="Update" FontSize="18" Grid.Column="1" FontWeight="Bold" Margin="10,5" />
+            <Button x:Name="btnDelete" Command="{Binding DeleteMachineCommand}" Height="50" Content="Delete" FontSize="18" Grid.Column="2" FontWeight="Bold" Margin="10,5" />
+        </StackPanel>
     </Grid>
 </UserControl>

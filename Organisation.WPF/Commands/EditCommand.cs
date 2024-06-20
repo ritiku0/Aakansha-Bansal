@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Organisation.WPF.Commands
 {
@@ -42,6 +43,8 @@ namespace Organisation.WPF.Commands
                           _profileViewModel.PhoneNumber,
                        _profileViewModel.Password
                      );
+
+                MessageBox.Show(string.Format("Details of Organisation {0} updated successfully", _profileViewModel.OrganisationName));
             }
 
             catch (Exception ex)

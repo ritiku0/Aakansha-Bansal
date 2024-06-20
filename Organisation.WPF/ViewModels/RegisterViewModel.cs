@@ -103,7 +103,8 @@ namespace Organisation.WPF.ViewModels
         public bool CanRegister => !string.IsNullOrEmpty(Email) &&
             !string.IsNullOrEmpty(OrganisationName) &&
             !string.IsNullOrEmpty(Password) &&
-            !string.IsNullOrEmpty(Country);
+            !string.IsNullOrEmpty(Country)&&
+            !string.IsNullOrEmpty(Address);
 
         public ICommand RegisterCommand { get; }
 

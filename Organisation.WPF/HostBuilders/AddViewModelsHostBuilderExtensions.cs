@@ -16,21 +16,23 @@ namespace Organisation.WPF.HostBuilders
             {
                             
                 services.AddTransient<MainViewModel>();
-                services.AddTransient<ProfileViewModel>();
-                services.AddTransient<MachineViewModel>();
+                services.AddTransient<ProfileViewModel>();                
                 services.AddTransient<JobViewModel>();
 
 
                 services.AddSingleton<CreateViewModel<ProfileViewModel>>(services => () => CreateProfileViewModel(services));
-                services.AddSingleton<CreateViewModel<MachineViewModel>>(services => () => services.GetRequiredService<MachineViewModel>());
+                services.AddSingleton<CreateViewModel<MachineViewModel>>(services => () => CreateMachineViewModel(services));
                 services.AddSingleton<CreateViewModel<JobViewModel>>(services => () => services.GetRequiredService<JobViewModel>());
                 services.AddSingleton<CreateViewModel<LoginViewModel>>(services => () => CreateLoginViewModel(services));
-                services.AddSingleton<CreateViewModel<RegisterViewModel>>(services => () => CreateRegisterViewModel(services));                
+                services.AddSingleton<CreateViewModel<RegisterViewModel>>(services => () => CreateRegisterViewModel(services));                 
                 services.AddSingleton<IOrganisationViewModelFactory, OrganisationViewModelFactory>();
 
                 services.AddSingleton<ViewModelDelegateRenavigator<ProfileViewModel>>();
+                services.AddSingleton<ViewModelDelegateRenavigator<MachineViewModel>>();
                 services.AddSingleton<ViewModelDelegateRenavigator<LoginViewModel>>();
                 services.AddSingleton<ViewModelDelegateRenavigator<RegisterViewModel>>();
+                services.AddSingleton<ViewModelDelegateRenavigator<AddNewMachineViewModel>>();
+                services.AddSingleton<CreateViewModel<AddNewMachineViewModel>>(services => () => CreateAddMachineViewModel(services));
             });
 
             return host;
@@ -55,6 +57,20 @@ namespace Organisation.WPF.HostBuilders
                 services.GetRequiredService<IAuthenticator>(),
                 services.GetRequiredService<ViewModelDelegateRenavigator<LoginViewModel>>(),
                 services.GetRequiredService<ViewModelDelegateRenavigator<LoginViewModel>>());
+        }
+
+        private static MachineViewModel CreateMachineViewModel(IServiceProvider services)
+        {
+            return new MachineViewModel(
+                services.GetRequiredService<IAuthenticator>(),
+                services.GetRequiredService<ViewModelDelegateRenavigator<AddNewMachineViewModel>>());
+        }
+
+        private static AddNewMachineViewModel CreateAddMachineViewModel(IServiceProvider services)
+        {
+            return new AddNewMachineViewModel(
+                services.GetRequiredService<IAuthenticator>(),
+                services.GetRequiredService<ViewModelDelegateRenavigator<MachineViewModel>>());                
         }
     }
 }

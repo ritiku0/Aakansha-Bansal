@@ -11,17 +11,18 @@ namespace Organisation.WPF.ViewModels.Factories
         private readonly CreateViewModel<LoginViewModel> _createLoginViewModel;
         private readonly CreateViewModel<MachineViewModel> _createMachineViewModel;
         private readonly CreateViewModel<JobViewModel> _createJobViewModel;
+        private readonly CreateViewModel<AddNewMachineViewModel> _createAddNewMachineViewModel;
 
         public OrganisationViewModelFactory(CreateViewModel<ProfileViewModel> createProfileViewModel,          
             CreateViewModel<LoginViewModel> createLoginViewModel, CreateViewModel<MachineViewModel> createMachineViewModel,
-            CreateViewModel<JobViewModel> createJobViewModel
+            CreateViewModel<JobViewModel> createJobViewModel,CreateViewModel<AddNewMachineViewModel> createAddNewMachineViewModel
            )
         {
-            _createProfileViewModel = createProfileViewModel;
-           
+            _createProfileViewModel = createProfileViewModel;           
             _createLoginViewModel = createLoginViewModel;
             _createMachineViewModel = createMachineViewModel;
             _createJobViewModel = createJobViewModel;
+            _createAddNewMachineViewModel = createAddNewMachineViewModel;
         }
 
         public ViewModelBase CreateViewModel(ViewType viewType)
@@ -36,6 +37,8 @@ namespace Organisation.WPF.ViewModels.Factories
                     return _createMachineViewModel();
                 case ViewType.JobView:
                     return _createJobViewModel();
+                case ViewType.AddNewMachineView:
+                    return _createAddNewMachineViewModel();
                 default:
                     throw new ArgumentException("The ViewType does not have a ViewModel.", "viewType");
             }

@@ -2,6 +2,9 @@
 using Organisation.Domain.Exceptions;
 using Organisation.Domain.Models;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Organisation.Domain.Services.AuthenticationServices
@@ -9,12 +12,14 @@ namespace Organisation.Domain.Services.AuthenticationServices
     public class AuthenticationService : IAuthenticationService
     {
         private readonly IAccountService _accountService;
+        private readonly IMachineDataService _machineDataService;
         private readonly IPasswordHasher _passwordHasher;
 
-        public AuthenticationService(IAccountService accountService, IPasswordHasher passwordHasher)
+        public AuthenticationService(IAccountService accountService, IPasswordHasher passwordHasher, IMachineDataService machineDataService)
         {
             _accountService = accountService;
             _passwordHasher = passwordHasher;
+            _machineDataService = machineDataService;
         }
 
         public async Task<User> Login(string username, string password)
@@ -78,6 +83,20 @@ namespace Organisation.Domain.Services.AuthenticationServices
             return result;
         }
 
+        public async Task<RegistrationResult> RegisterEntity(Machine machine)
+        {
+            RegistrationResult result = RegistrationResult.Success;
+            try
+            {
+                await _machineDataService.Create(machine);
+            }
+            catch (Exception ex)
+            {
+                result = RegistrationResult.Fail;
+                Console.WriteLine(ex.Message);
+            }
+            return result;
+        }
 
         public async Task<RegistrationResult> Update(int Id, string username, string country, string address, string email, string phoneNumber, string password)
         {
@@ -105,6 +124,47 @@ namespace Organisation.Domain.Services.AuthenticationServices
             }
             return result;
         }
+
+
+        public async Task<Machine> UpdateMachine(Machine machine)
+        {
+            try
+            {
+                await _machineDataService.Update(machine.Id, machine);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return default(Machine);
+        }
+
+        public async Task<bool> DeleteMachine(Machine machine)
+        {
+            try
+            {
+                await _machineDataService.Delete(machine.Id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return default;
+        }
+
+        public async Task<IEnumerable<Machine>> FetchMachines()
+        {
+            try
+            {
+                return await _machineDataService.GetAll();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return Enumerable.Empty<Machine>();
+        }
+
 
     }
 }

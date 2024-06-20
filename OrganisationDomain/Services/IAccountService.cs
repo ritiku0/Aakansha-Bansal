@@ -3,9 +3,10 @@ using System.Threading.Tasks;
 
 namespace Organisation.Domain.Services
 {
-    public interface IAccountService : IDataService<User>
+    public interface IAccountService: IDataService<User>
     {
         Task<User> GetByUsername(string username);
-        Task<User> GetByEmail(string email);
+        Task<User> GetByEmail(string email);        
     }
+    
 }

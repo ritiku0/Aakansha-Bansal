@@ -1,29 +1,71 @@
 ﻿using Organisation.Domain.Models;
-using System;
-using System.Collections.Generic;
+using Organisation.WPF.Commands;
+using Organisation.WPF.State.Authenticators;
+using Organisation.WPF.State.Navigators;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Organisation.WPF.ViewModels
 {
     public class MachineViewModel : ViewModelBase
     {
-        public ObservableCollection<Machine> Machines { get; }
-        public MachineViewModel()
+        private readonly IAuthenticator authenticator;
+        private ObservableCollection<Machine> machines;
+        private Machine machine;
+
+        public ObservableCollection<Machine> Machines
         {
-            Machines = new ObservableCollection<Machine>();
-            AddMachines();
+            get => machines;
+            set
+            {
+                machines = value;
+                OnPropertyChanged(nameof(Machines));
+                OnPropertyChanged(nameof(CanUpdate));
+            }
         }
 
-        private void AddMachines()
+        public Machine SelectedMachineItem
         {
-            Machines.Add(new Machine { MachineName = "M1", MachineNumber = 11111111, MachineImage = "M1.png", ManufacturingDate = DateTime.Now, ProductionSpeed = 100 });
-            Machines.Add(new Machine { MachineName = "M2", MachineNumber = 22222222, MachineImage = "M2.png", ManufacturingDate = DateTime.Now, ProductionSpeed = 200 });
-            Machines.Add(new Machine { MachineName = "M3", MachineNumber = 33333333, MachineImage = "M3.png", ManufacturingDate = DateTime.Now, ProductionSpeed = 300 });
-            Machines.Add(new Machine { MachineName = "M4", MachineNumber = 44444444, MachineImage = "M4.png", ManufacturingDate = DateTime.Now, ProductionSpeed = 400 });
+            get => machine;
+            set
+            {
+                machine = value;
+                OnPropertyChanged(nameof(SelectedMachineItem));
+                OnPropertyChanged(nameof(CanUpdate));
+            }
         }
+
+        public MachineViewModel(IAuthenticator authenticator, IRenavigator registerRenavigator)
+        {
+            this.authenticator = authenticator;
+            AddMachines();
+            AddMachineCommand = new RenavigateCommand(registerRenavigator);
+            UpdateMachineCommand = new UpdateMachineCommand(this, authenticator);
+            DeleteMachineCommand = new DeleteMachineCommand(this, authenticator);
+
+
+        }
+
+        public bool CanUpdate(object param)
+        {
+            if (SelectedMachineItem.MachineName != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+      
+
+        public ICommand AddMachineCommand { get; }
+        public ICommand UpdateMachineCommand { get; }
+        public ICommand DeleteMachineCommand { get; }
+
+        private async void AddMachines()
+        {
+            var machines = await authenticator.FetchMachines();
+            Machines = new ObservableCollection<Machine>(machines);
+        }
+
     }
-   
 }

@@ -28,6 +28,10 @@ namespace Organisation.WPF.State.Authenticators
         /// <exception cref="Exception">Thrown if the registration fails.</exception>
         Task<RegistrationResult> Register(string username, string country, string address, string email, string phoneNumber, string password);
 
+        Task<RegistrationResult> RegisterMachine(Machine machine);
+
+        Task<IEnumerable<Machine>> FetchMachines();
+
         /// <summary>
         /// Login to the application.
         /// </summary>
@@ -50,6 +54,10 @@ namespace Organisation.WPF.State.Authenticators
         /// <returns>The result of the registration.</returns>
         /// <exception cref="Exception">Thrown if the registration fails.</exception>
         Task<RegistrationResult> Update(int Id, string username, string country, string address, string email, string phoneNumber, string password);
+
+        Task<Machine> UpdateMachine(Machine machine);
+
+        Task<bool> DeleteMachine(Machine machine);
 
         void Logout();
     }

@@ -19,7 +19,9 @@ namespace Organisation.WPF.HostBuilders
 
                 services.AddSingleton<IAuthenticationService, AuthenticationService>();
                 services.AddSingleton<IDataService<User>, AccountDataService>();
-                services.AddSingleton<IAccountService, AccountDataService>();                
+                services.AddSingleton<IDataService<Machine>,MachineDataService>();
+                services.AddSingleton<IAccountService, AccountDataService>();
+                services.AddSingleton<IMachineDataService, MachineDataService>();
             });
 
             return host;

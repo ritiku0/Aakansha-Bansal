@@ -28,9 +28,13 @@
             <DataTemplate DataType="{x:Type viewmodels:MachineViewModel}">
                 <views:MachineView />
             </DataTemplate>
-
+            
             <DataTemplate DataType="{x:Type viewmodels:JobViewModel}">
                 <views:JobVeiw />
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewmodels:AddNewMachineViewModel}">
+                <views:AddNewMachine />
             </DataTemplate>
         </ResourceDictionary>
 

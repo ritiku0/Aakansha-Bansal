@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Organisation.Domain.Models;
 
@@ -9,7 +10,8 @@ namespace Organisation.Domain.Services.AuthenticationServices
         Success,
         PasswordsDoNotMatch,
         EmailAlreadyExists,
-        UsernameAlreadyExists
+        UsernameAlreadyExists,
+        Fail
     }
 
     public interface IAuthenticationService
@@ -46,6 +48,22 @@ namespace Organisation.Domain.Services.AuthenticationServices
         /// <returns>The result of the registration.</returns>
         /// <exception cref="Exception">Thrown if the registration fails.</exception>
         Task<RegistrationResult> Update(int Id, string username, string country, string address, string email, string phoneNumber, string password);
+
+        Task<Machine> UpdateMachine(Machine machine);
+
+        Task<bool> DeleteMachine(Machine machine);
+
+        /// <summary>
+        /// Register a new user.
+        /// </summary>       
+        /// <param name="entity">The user's entity.</param>
+        /// <returns>The result of the registration.</returns>
+        /// <exception cref="Exception">Thrown if the registration fails.</exception>
+        Task<RegistrationResult> RegisterEntity(Machine machine);
+
+        /// <summary>
+        /// Register a new user.     
+        Task<IEnumerable<Machine>> FetchMachines();
 
     }
 }

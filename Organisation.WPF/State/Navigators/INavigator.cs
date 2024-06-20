@@ -11,7 +11,8 @@ namespace Organisation.WPF.State.Navigators
         Login,
         Profile,
         MachineView,
-        JobView
+        JobView,
+        AddNewMachineView
     }
 
     public interface INavigator
